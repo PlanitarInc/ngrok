@@ -45,7 +45,8 @@ release-all: fmt release-client release-server
 all: fmt client server
 
 clean:
-	go clean -i -r ngrok/...
+	rm -rf bin/
+	go clean -i -r ngrok/... || true
 	rm -rf src/ngrok/client/assets/ src/ngrok/server/assets/
 
 contributors:

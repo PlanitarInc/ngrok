@@ -70,7 +70,7 @@ func LoadConfiguration(opts *Options) (config *Configuration, err error) {
 
 	// set configuration defaults
 	if opts.server_addr != "" {
-		config.ServerAddr = opts.ServerAddr
+		config.ServerAddr = opts.server_addr
 	}
 	if config.ServerAddr == "" {
 		config.ServerAddr = defaultServerAddr

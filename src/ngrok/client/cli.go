@@ -60,7 +60,7 @@ func ParseArgs() (opts *Options, err error) {
 		"Path to ngrok configuration file. (default: $HOME/.ngrok)")
 
 	server_addr := flag.String(
-		"server_addr",
+		"server-addr",
 		"",
 		"Server addres to connect to. E.g. ngrok.planitar.com:8080")
 

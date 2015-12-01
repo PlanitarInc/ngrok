@@ -2,7 +2,6 @@ package client
 
 import (
 	"fmt"
-	"gopkg.in/yaml.v1"
 	"io/ioutil"
 	"net"
 	"net/url"
@@ -13,6 +12,8 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	"gopkg.in/yaml.v1"
 )
 
 type Configuration struct {
@@ -68,6 +69,9 @@ func LoadConfiguration(opts *Options) (config *Configuration, err error) {
 	}
 
 	// set configuration defaults
+	if opts.server_addr != "" {
+		config.ServerAddr = opts.ServerAddr
+	}
 	if config.ServerAddr == "" {
 		config.ServerAddr = defaultServerAddr
 	}

@@ -52,3 +52,23 @@ clean:
 contributors:
 	echo "Contributors to ngrok, both large and small:\n" > CONTRIBUTORS
 	git log --raw | grep "^Author: " | sort | uniq | cut -d ' ' -f2- | sed 's/^/- /' | cut -d '<' -f1 >> CONTRIBUTORS
+
+
+NGROK_DOCKER_IMAGE ?= ngrok
+release-docker:
+	make clean
+	docker run --rm \
+	  -v `pwd`:/src:ro \
+	  -v `pwd`/bin:/out \
+	  -e GOPATH=/tmp/go \
+	  -e CGO_ENABLED=0 \
+	  -e BUILDFLAGS="-a -ldflags '-s'" \
+	  -e SRC_DIR=/tmp/go/src/github.com/PlanitarInc/ngrok \
+	  planitar/dev-go bash -c ' \
+	    mkdir -p $${SRC_DIR} && \
+	    cp -r /src/* $${SRC_DIR} && \
+	    cd $${SRC_DIR} && \
+	    make clean && \
+	    make release-all && \
+	    cp -r bin/ /out/docker'
+	docker build -t ${NGROK_DOCKER_IMAGE} .
